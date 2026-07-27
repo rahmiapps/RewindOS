@@ -24,11 +24,11 @@ if (!failures.length) note('JavaScript and CommonJS syntax');
 
 const renderer = fs.readFileSync(path.join(root, 'src/renderer/app.js'), 'utf8');
 const start = renderer.indexOf('const T = ');
-const end = renderer.indexOf('\n\n  const navItems', start);
-if (start < 0 || end < 0) fail('Renderer translation table could not be located.');
+const navStart = renderer.indexOf('const navItems', start);
+if (start < 0 || navStart < 0) fail('Renderer translation table could not be located.');
 else {
   try {
-    const literal = renderer.slice(start + 'const T = '.length, end).replace(/;\s*$/, '');
+    const literal = renderer.slice(start + 'const T = '.length, navStart).trim().replace(/;\s*$/, '');
     const table = vm.runInNewContext(`(${literal})`, Object.create(null));
     const de = Object.keys(table.de).sort();
     const en = Object.keys(table.en).sort();
@@ -52,7 +52,6 @@ if (duplicates.length) fail(`Duplicate HTML IDs: ${[...new Set(duplicates)].join
 const requiredIds = ['content', 'navigation', 'modalRoot', 'toastRoot', 'pageTitle', 'pageSubtitle', 'tagline', 'protectionButton', 'protectionLabel', 'settingsButton', 'refreshButton', 'emergencyButton'];
 for (const id of requiredIds) if (!ids.includes(id)) fail(`Missing renderer root element #${id}`);
 if (!duplicates.length && requiredIds.every((id) => ids.includes(id))) note('Renderer HTML structure');
-
 
 const mainSource = fs.readFileSync(path.join(root, 'src/main/main.cjs'), 'utf8');
 for (const pattern of [

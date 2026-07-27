@@ -17,7 +17,8 @@
     "postinstall": "electron-builder install-app-deps",
     "verify": "node scripts/verify-source.cjs && node scripts/verify-requirements.cjs && node --test tests/*.test.cjs",
     "smoke": "electron . --smoke-test",
-    "audit": "npm audit --audit-level=high"
+    "audit": "npm audit --omit=dev --audit-level=high",
+    "audit:full": "npm audit --audit-level=high"
   },
   "devDependencies": {
     "electron": "43.2.0",
