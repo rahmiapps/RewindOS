@@ -188,7 +188,7 @@ test('version test restore never changes the current original file', async (t) =
 
 test('release configuration uses least privilege and current hardened build line', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf8'));
-  const workflow = fs.readFileSync(path.join(__dirname, '../.github/workflows/release.yml'), 'utf8');
+  const workflow = fs.readFileSync(path.join(__dirname, '../.github/workflows/release.yml'), 'utf8').replace(/\r\n/g, '\n');
   assert.equal(packageJson.version, '0.4.0');
   assert.equal(packageJson.devDependencies.electron, '43.2.0');
   assert.equal(packageJson.devDependencies['electron-builder'], '26.15.3');
