@@ -10,6 +10,15 @@ $major = [int]((node --version).TrimStart('v').Split('.')[0])
 if ($major -lt 22) { throw "Node.js 22 or newer is required." }
 
 if (Test-Path "package-lock.json") { npm ci } else { npm install }
+$SandboxPath = Join-Path $ProjectRoot "node_modules/electron/dist/chrome-sandbox"
+if (-not (Test-Path $SandboxPath -PathType Leaf)) { throw "Electron chrome-sandbox was not found after npm install." }
+& sudo chown root:root $SandboxPath
+if ($LASTEXITCODE -ne 0) { throw "Could not set the Electron sandbox owner." }
+& sudo chmod 4755 $SandboxPath
+if ($LASTEXITCODE -ne 0) { throw "Could not set the Electron sandbox permissions." }
+$SandboxState = (& stat -c "%U %G %a" $SandboxPath).Trim()
+if ($SandboxState -ne "root root 4755") { throw "Electron sandbox verification failed: $SandboxState" }
+Write-Host "Electron sandbox configured securely: $SandboxState" -ForegroundColor Green
 npm run verify
 npm run audit
 if (Get-Command xvfb-run -ErrorAction SilentlyContinue) {

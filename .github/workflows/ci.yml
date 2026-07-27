@@ -23,6 +23,11 @@ jobs:
       - name: Install smoke-test dependency
         run: sudo apt-get update && sudo apt-get install -y xvfb
       - run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Configure Electron sandbox
+        run: |
+          sudo chown root:root node_modules/electron/dist/chrome-sandbox
+          sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+          stat -c '%U %G %a %n' node_modules/electron/dist/chrome-sandbox
       - run: npm run verify
       - run: npm run audit
       - run: xvfb-run -a npm run smoke

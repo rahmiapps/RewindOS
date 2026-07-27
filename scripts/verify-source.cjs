@@ -65,6 +65,17 @@ for (const directive of ["connect-src 'none'", "object-src 'none'", "frame-src '
   if (!html.includes(directive)) fail(`Content Security Policy is missing ${directive}.`);
 if (!failures.some((item) => item.includes('security control') || item.includes('Content Security Policy'))) note('Electron renderer security controls');
 
+
+const releaseWorkflow = fs.readFileSync(path.join(root, '.github/workflows/release.yml'), 'utf8');
+const ciWorkflow = fs.readFileSync(path.join(root, '.github/workflows/ci.yml'), 'utf8');
+const sandboxHelper = fs.readFileSync(path.join(root, 'scripts/configure-electron-sandbox.sh'), 'utf8');
+for (const [source, label] of [[releaseWorkflow, 'release workflow'], [ciWorkflow, 'CI workflow'], [sandboxHelper, 'local Linux sandbox helper']]) {
+  if (!source.includes('chrome-sandbox') || !source.includes('chmod 4755') || !source.includes('chown root:root')) {
+    fail(`Secure Electron sandbox configuration is missing from the ${label}.`);
+  }
+}
+if (!failures.some((item) => item.includes('Electron sandbox'))) note('Secure Linux Electron sandbox configuration');
+
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 if (!packageJson.scripts?.audit || !packageJson.scripts?.smoke) fail('Security audit or smoke-test script is missing.');
 else note('Dependency audit and startup smoke-test scripts');

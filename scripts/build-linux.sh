@@ -10,6 +10,7 @@ MAJOR="$(node --version | sed 's/^v//' | cut -d. -f1)"
 [ "$MAJOR" -ge 22 ] || { echo "Node.js 22 or newer is required."; exit 1; }
 
 if [ -f package-lock.json ]; then npm ci; else npm install; fi
+"$ROOT/scripts/configure-electron-sandbox.sh"
 npm run verify
 npm run audit
 if command -v xvfb-run >/dev/null; then

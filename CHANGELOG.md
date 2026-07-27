@@ -53,3 +53,11 @@
 ## 0.1.0
 
 - initial source prototype
+
+### Build and CI hardening
+
+- Configure Electron `chrome-sandbox` as `root:root` with mode `4755` before Linux smoke tests.
+- Apply the same secure sandbox setup to release builds, CI, and local Linux build/development scripts.
+- Remove npm cache configuration when no committed lockfile is available.
+- Update CodeQL workflow actions to v4.
+- Remove the temporary `README.txt` CI-fix instruction file.
