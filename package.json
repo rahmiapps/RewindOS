@@ -1,0 +1,29 @@
+{
+  "name": "rewindos",
+  "version": "0.4.0",
+  "description": "Local, private undo and recovery center for Windows and Linux.",
+  "main": "src/main/main.cjs",
+  "author": "Rahmi Apps",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node --test tests/*.test.cjs",
+    "pack": "electron-builder --dir",
+    "dist:win": "electron-builder --win nsis portable",
+    "dist:linux": "electron-builder --linux AppImage deb rpm",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "verify": "node scripts/verify-source.cjs && node scripts/verify-requirements.cjs && node --test tests/*.test.cjs",
+    "smoke": "electron . --smoke-test",
+    "audit": "npm audit --audit-level=high"
+  },
+  "devDependencies": {
+    "electron": "43.2.0",
+    "electron-builder": "26.15.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

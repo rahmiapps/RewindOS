@@ -1,0 +1,11 @@
+RewindOS 0.4.0 GitHub-ready verification
+
+Source verification: PASSED
+Requirement verification: 49/49 PASSED
+Automated tests: 77/77 PASSED
+Failures: 0
+Skipped: 0
+
+This verification covers source logic, security checks, translations, renderer hardening, restore behavior, deletion search, protected-folder requirements, Windows/Linux packaging configuration and GitHub Actions definitions.
+
+Real Windows and Linux installer execution, upgrade, uninstall and code-signing tests must still be performed on genuine target systems before public release.

@@ -1,0 +1,59 @@
+appId: com.rahmiapps.rewindos
+productName: RewindOS
+copyright: Copyright © 2026 Rahmi Apps
+asar: true
+files:
+  - src/**/*
+  - assets/**/*
+  - build/icon.png
+  - package.json
+extraResources:
+  - from: scripts/install-linux-file-manager-integration.sh
+    to: tools/install-linux-file-manager-integration.sh
+  - from: scripts/uninstall-linux-file-manager-integration.sh
+    to: tools/uninstall-linux-file-manager-integration.sh
+  - from: scripts/register-explorer-menu.ps1
+    to: tools/register-explorer-menu.ps1
+  - from: scripts/unregister-explorer-menu.ps1
+    to: tools/unregister-explorer-menu.ps1
+  - from: LICENSE
+    to: LICENSE.txt
+extraMetadata:
+  main: src/main/main.cjs
+directories:
+  output: dist
+  buildResources: build
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: RewindOS
+  deleteAppDataOnUninstall: false
+  include: build/installer.nsh
+linux:
+  icon: build/icons
+  category: Utility
+  maintainer: Rahmi Apps
+  vendor: Rahmi Apps
+  synopsis: Local undo and recovery center
+  description: RewindOS protects selected folders, stores local versions, and helps restore accidental changes.
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+    - target: rpm
+      arch: [x64]
+  desktop:
+    entry:
+      Name: RewindOS
+      Comment: Local undo and recovery center
+      Categories: Utility;System;

@@ -1,0 +1,28 @@
+name: RewindOS CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rewindos-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install smoke-test dependency
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+      - run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - run: npm run verify
+      - run: npm run audit
+      - run: xvfb-run -a npm run smoke

@@ -1,0 +1,8 @@
+Place the tested Windows installer in this folder before publishing a manual GitHub Release.
+
+Recommended file names:
+- RewindOS-Setup-0.4.0.exe
+- RewindOS-Portable-0.4.0.exe (optional)
+- SHA256SUMS-Windows.txt
+
+Do not commit private signing certificates, passwords, vault data, or user backups.

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'">
+  <title>RewindOS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../../build/icon.png" alt="RewindOS" class="brand-icon" />
+        <div><strong>RewindOS</strong><span id="tagline">Dein Computer kann zurückspulen.</span></div>
+      </div>
+      <nav id="navigation" aria-label="Main navigation"></nav>
+      <div class="sidebar-footer">
+        <button id="protectionButton" class="protection-pill"><span class="pulse"></span><span id="protectionLabel">Schutz aktiv</span></button>
+        <div class="offline-label">● Offline · Local only</div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Übersicht</h1>
+          <p id="pageSubtitle">Lokaler Schutz und sichere Wiederherstellung</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" id="emergencyButton" title="Emergency snapshot">⚡</button>
+          <button class="icon-button" id="refreshButton" title="Refresh">↻</button>
+          <button class="avatar-button" id="settingsButton">⚙</button>
+        </div>
+      </header>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+  <div id="toastRoot" class="toast-root" aria-live="assertive"></div>
+  <script src="app.js"></script>
+</body>
+</html>
